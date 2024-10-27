@@ -9,6 +9,10 @@ class Microchips(db.Model):
     mac_address = db.Column(db.String(17), nullable=False, unique=True)
     device_name = db.Column(db.Integer, nullable=False)
 
+    is_active = db.Column(db.Boolean, nullable=False ,default=False)
+
+    status = db.Column(db.Integer, nullable=False, default=0)
+
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)   
 
     microchip_authorization = db.relationship("MicrochipAuthorization",lazy=True)

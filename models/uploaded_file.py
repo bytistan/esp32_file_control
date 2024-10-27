@@ -8,9 +8,13 @@ class UploadedFile(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     microchip_id = db.Column(db.Integer, db.ForeignKey("microchips.id"), nullable=False)
-
-    file_path = db.Column(db.String(512), nullable=False, unique=True)
     
-    status = db.Column(db.Integer, nullable=True)
-
+    successful = db.Column(db.Boolean, nullable=False, default=False)
+    
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)   
+
+    @classmethod
+    def from_dict(cls, data):
+        allowed_fields = {"user_id", "microchip_id", "file_path"}
+        filtered_data = {key: data[key] for key in allowed_fields if key in data}
+        return cls(**filtered_data)
